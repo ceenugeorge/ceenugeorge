@@ -11,13 +11,6 @@ A plain HTML site with no build step, hosted for free on GitHub Pages.
 | `images/ceenu.jpg` | Your portrait |
 | `media/` | Videos and GIFs for publication previews |
 
-## Put it online (one time, ~15 minutes)
-
-1. Create a free account at github.com. The username decides your address: `username.github.io`.
-2. Click **+ → New repository**. Name it exactly `username.github.io` (with your username), set it to **Public**, and click **Create repository**.
-3. On the new repository page, click **uploading an existing file**. Drag in everything from this folder, including the `images` and `media` folders, then click **Commit changes**.
-4. Go to **Settings → Pages**. Under "Build and deployment", choose **Deploy from a branch**, branch **main**, folder **/ (root)**, then **Save**.
-5. After a minute or two, your site is live at `https://username.github.io`.
 
 ## Add a new paper
 
