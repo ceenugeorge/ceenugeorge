@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ceenu George</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Ceenu George, Professor of Human-Computer Interaction at TU Berlin. AR/VR systems that work at the edges of attention.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap">
+<style>
+/* Layout: one quiet left-aligned column; orange appears only at the periphery (scroll edge, awards, links on hover) */
+:root {
+  --bg: #ffffff;
+  --fg: #111111;
+  --muted: #6b6560;
+  --rule: #e8e4e0;
+  --tile: #f5f3f1;
+  --accent: #e2550c;
+  --display: "Instrument Serif", "Times New Roman", Georgia, serif;
+  --body: "Hanken Grotesk", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --col: 46rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f0e0d; --fg: #f1eeeb; --muted: #9e968f; --rule: #2a2724; --tile: #1a1817; --accent: #ff7a33;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f0e0d; --fg: #f1eeeb; --muted: #9e968f; --rule: #2a2724; --tile: #1a1817; --accent: #ff7a33;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 10; background: var(--bg);
+}
+a { color: inherit; text-decoration-color: var(--rule); text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
+a:hover { color: var(--accent); text-decoration-color: currentColor; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+img, video { max-width: 100%; display: block; }
+
+/* Peripheral reading line: fills along the left edge as you scroll */
+.edge {
+  position: fixed; left: 0; top: 0; width: 3px; height: 100%;
+  background: var(--accent); transform-origin: top; transform: scaleY(0); z-index: 20;
+  pointer-events: none;
+}
+
+.wrap {
+  max-width: calc(var(--col) + 2 * 1.5rem);
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* Header */
+header.top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid transparent;
+  transition: border-color .2s;
+}
+header.top.scrolled { border-bottom-color: var(--rule); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 0.9rem; flex-wrap: wrap; }
+.wordmark { font-family: var(--display); font-size: 1.35rem; text-decoration: none; line-height: 1; }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 1.25rem; flex-wrap: wrap; }
+nav a { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; color: var(--muted); }
+nav a:hover, nav a.on { color: var(--fg); }
+nav a.on { box-shadow: 0 1px 0 var(--accent); }
+
+/* Hero */
+.hero { padding-block: 4.5rem 3.5rem; display: grid; grid-template-columns: 9.5rem 1fr; gap: 2.25rem; align-items: start; }
+.portrait { width: 9.5rem; aspect-ratio: 1; object-fit: cover; filter: grayscale(1) contrast(1.05); transition: filter .4s; background: var(--tile); }
+.portrait:hover { filter: none; }
+.hero h1 { font-family: var(--display); font-weight: 400; font-size: clamp(2.75rem, 7vw, 4.25rem); line-height: 0.98; letter-spacing: -0.01em; margin: 0 0 0.9rem; text-wrap: balance; }
+.role { font-family: var(--mono); font-size: 0.8125rem; color: var(--muted); letter-spacing: 0.02em; margin: 0 0 1.5rem; line-height: 1.5; }
+.thesis { font-size: 1.3rem; line-height: 1.45; margin: 0 0 1.75rem; max-width: 34ch; text-wrap: pretty; }
+.thesis em { font-style: normal; background-image: linear-gradient(var(--accent), var(--accent)); background-size: 100% 2px; background-position: 0 94%; background-repeat: no-repeat; }
+.links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; margin: 0; padding: 0; list-style: none; font-size: 0.9375rem; }
+.links a { text-decoration: none; border-bottom: 1px solid var(--rule); }
+.links a:hover { border-bottom-color: var(--accent); }
+
+/* Sections */
+section { padding-block: 3.25rem; border-top: 1px solid var(--rule); }
+.label { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0 0 1.75rem; font-weight: 400; }
+h2.lead { font-family: var(--display); font-weight: 400; font-size: clamp(1.75rem, 4vw, 2.35rem); line-height: 1.15; margin: 0 0 1.5rem; max-width: 26ch; text-wrap: balance; }
+.prose p { margin: 0 0 1.1rem; max-width: 64ch; }
+.prose p:last-child { margin-bottom: 0; }
+.pillars { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; }
+.pillars li { border-top: 1px solid var(--fg); padding-top: 0.75rem; }
+.pillars strong { display: block; font-weight: 600; margin-bottom: 0.25rem; }
+.pillars span { color: var(--muted); font-size: 0.9375rem; line-height: 1.5; display: block; }
+
+/* Publications */
+.pub-tools { display: flex; flex-wrap: wrap; gap: 0.75rem 1rem; align-items: center; justify-content: space-between; margin-bottom: 2rem; }
+.chips { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+.chip {
+  font: 500 0.75rem/1 var(--mono); letter-spacing: 0.04em; text-transform: uppercase;
+  padding: 0.55rem 0.75rem; border: 1px solid var(--rule); background: transparent; color: var(--muted); cursor: pointer; border-radius: 999px;
+}
+.chip:hover { color: var(--fg); border-color: var(--fg); }
+.chip[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.search { font: 400 0.9375rem var(--body); color: var(--fg); background: transparent; border: 0; border-bottom: 1px solid var(--rule); padding: 0.4rem 0; width: 14rem; max-width: 100%; }
+.search:focus { outline: none; border-bottom-color: var(--accent); }
+.search::placeholder { color: var(--muted); }
+.count { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
+
+.year-group { display: grid; grid-template-columns: 4rem minmax(0, 1fr); gap: 1rem; padding-block: 1.25rem; border-top: 1px solid var(--rule); }
+.year-group:first-child { border-top: 0; padding-top: 0; }
+.year { font-family: var(--mono); font-size: 0.8125rem; color: var(--muted); font-variant-numeric: tabular-nums; padding-top: 0.15rem; }
+.pubs { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.5rem; }
+.pub { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: 1.1rem; align-items: start; }
+.thumb {
+  width: 100%; aspect-ratio: 3 / 2; background: var(--tile); overflow: hidden; position: relative;
+  display: flex; align-items: flex-end; padding: 0.5rem;
+}
+.thumb video, .thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.thumb .venue-mark { font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.03em; color: var(--muted); line-height: 1.2; }
+.thumb.has-media::after {
+  content: ""; position: absolute; top: 0.45rem; right: 0.45rem; width: 0.4rem; height: 0.4rem; border-radius: 50%; background: var(--accent);
+}
+.pub h3 { font-size: 1rem; font-weight: 600; line-height: 1.35; margin: 0 0 0.3rem; text-wrap: pretty; }
+.pub .authors { font-size: 0.9375rem; color: var(--muted); margin: 0 0 0.2rem; line-height: 1.45; }
+.pub .authors b { color: var(--fg); font-weight: 500; }
+.pub .meta { font-size: 0.875rem; color: var(--muted); margin: 0; display: flex; flex-wrap: wrap; gap: 0.15rem 0.85rem; align-items: baseline; }
+.pub .meta .venue { font-style: italic; }
+.pub .meta a { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; color: var(--fg); }
+.pub .meta a:hover { color: var(--accent); }
+.award { display: inline-block; font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.3rem; }
+.empty { color: var(--muted); padding: 1rem 0; }
+
+/* Lists: career, awards, service */
+.rows { list-style: none; margin: 0; padding: 0; }
+.rows li { display: grid; grid-template-columns: 9rem minmax(0, 1fr); gap: 1rem; padding-block: 0.7rem; border-top: 1px solid var(--rule); }
+.rows li:first-child { border-top: 0; padding-top: 0; }
+.rows .when { font-family: var(--mono); font-size: 0.8125rem; color: var(--muted); font-variant-numeric: tabular-nums; padding-top: 0.15rem; }
+.rows .what { min-width: 0; }
+.rows .what span { color: var(--muted); }
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem; }
+.two h3 { font-size: 1rem; font-weight: 600; margin: 0 0 0.75rem; }
+.plain { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem; font-size: 0.9375rem; }
+.plain li { padding-left: 1rem; position: relative; }
+.plain li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 0.4rem; height: 1px; background: var(--muted); }
+.subhead { margin-top: 2.5rem !important; }
+
+/* Contact */
+.contact { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; }
+.contact dt { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.35rem; }
+.contact dd { margin: 0; overflow-wrap: anywhere; }
+.copy { font: 500 0.6875rem/1 var(--mono); letter-spacing: 0.05em; text-transform: uppercase; background: none; border: 1px solid var(--rule); color: var(--muted); padding: 0.35rem 0.5rem; margin-left: 0.4rem; cursor: pointer; border-radius: 3px; vertical-align: 0.1em; }
+.copy:hover { color: var(--fg); border-color: var(--fg); }
+
+footer { border-top: 1px solid var(--rule); padding-block: 2rem 3rem; font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
+footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+
+@media (max-width: 720px) {
+  .pillars { grid-template-columns: 1fr; gap: 1rem; }
+  .two, .contact { grid-template-columns: 1fr; gap: 2rem; }
+}
+@media (max-width: 600px) {
+  .hero { grid-template-columns: 1fr; gap: 1.5rem; padding-block: 2.5rem 2.5rem; }
+  .portrait { width: 7rem; }
+  .year-group { grid-template-columns: 1fr; gap: 0.75rem; }
+  .pub { grid-template-columns: 6.5rem minmax(0, 1fr); gap: 0.85rem; }
+  .rows li { grid-template-columns: 1fr; gap: 0.1rem; }
+  nav ul { gap: 0.9rem; }
+  .search { width: 100%; }
+}
+</style>
+</head>
+<body>
+<div class="edge" aria-hidden="true"></div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="wordmark" href="#top">Ceenu George</a>
+    <nav aria-label="Sections">
+      <ul>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap">
+    <div class="hero">
+      <img class="portrait" src="images/ceenu.jpg" alt="Portrait of Ceenu George" width="480" height="452">
+      <div>
+        <h1>Ceenu George</h1>
+        <p class="role">Professor of Human-Computer Interaction<br>Technische Universität Berlin · Faculty IV</p>
+        <p class="thesis">I design AR/VR systems that keep people aware of what intelligent technology is doing, by working at the <em>edges of attention</em>.</p>
+        <ul class="links">
+          <li><a href="#publications">Publications</a></li>
+          <li><a href="https://orcid.org/0009-0002-8616-0234" target="_blank" rel="noopener">ORCID</a></li>
+          <li><a href="https://www.hci.tu-berlin.de/" target="_blank" rel="noopener">HCI Lab, TU Berlin</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <section id="research">
+    <div class="wrap">
+      <p class="label">Research</p>
+      <h2 class="lead">What should technology optimise for, if not our attention?</h2>
+      <div class="prose">
+        <p>Many products are built to capture attention, and as AI takes over more of our tasks, that choice matters more. I am interested in a different priority: systems that support curiosity and understanding without demanding more of our focus.</p>
+        <p>When people navigate, write or search, they usually just want to get from A to B. They rarely stop to understand the system they are using. Yet that understanding matters more as AI becomes more autonomous and shapes more of our decisions.</p>
+        <p>I think the answer lies in peripheral perception, the background awareness we keep of our surroundings without looking at them directly. By engaging people at the edges of attention, systems can help them notice patterns and behaviours without interrupting their main task. That is why my lab builds peripheral interfaces, especially in AR/VR and hybrid environments where physical, 2D and 3D spaces meet.</p>
+      </div>
+      <ul class="pillars">
+        <li><strong>Peripheral interaction</strong><span>Interfaces that stay unobtrusive and align with how perception and attention actually work.</span></li>
+        <li><strong>Hybrid reality</strong><span>Moving between physical, 2D and 3D spaces, and across the reality–virtuality continuum.</span></li>
+        <li><strong>Awareness of AI</strong><span>Helping people follow what automated systems are doing, so they keep curiosity and agency.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="publications">
+    <div class="wrap">
+      <p class="label">Publications</p>
+      <div class="pub-tools">
+        <div class="chips" role="group" aria-label="Filter publications">
+          <button class="chip" type="button" id="f-all" data-filter="all" aria-pressed="true">All</button>
+          <button class="chip" type="button" id="f-selected" data-filter="selected" aria-pressed="false">Selected</button>
+          <button class="chip" type="button" id="f-media" data-filter="media" aria-pressed="false">With video</button>
+        </div>
+        <label style="display:flex;gap:.75rem;align-items:baseline;flex:1;justify-content:flex-end;min-width:0">
+          <span class="count" id="pub-count"></span>
+          <input class="search" id="pub-search" type="search" placeholder="Search title, author, venue" aria-label="Search publications">
+        </label>
+      </div>
+      <div id="pub-list"></div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <p class="label">About</p>
+      <div class="prose">
+        <p>Ceenu George is a Professor of Human-Computer Interaction (W1 tenure track to W3) at Technische Universität Berlin, where she founded and leads the HCI group in the Faculty of Electrical Engineering and Computer Science. She brings more than 15 years of combined academic and industry experience in HCI and digital product development.</p>
+        <p>Before joining TU Berlin she was a Senior Researcher in Google's Trust and Safety research team in Munich, and a Visiting Professor (W3) at the Human-Centered Artificial Intelligence lab of the University of Augsburg. She received her doctorate (Dr. rer. nat., summa cum laude) from LMU Munich with a dissertation on virtual reality interfaces for seamless interaction with the physical reality. Earlier, she led UX research and digital products at American Express in London and Munich.</p>
+      </div>
+
+      <p class="label subhead">Career</p>
+      <ul class="rows">
+        <li><span class="when">2023 – now</span><span class="what">Professor of Human-Computer Interaction <span>· TU Berlin</span></span></li>
+        <li><span class="when">2022 – 2023</span><span class="what">Senior Researcher, Trust and Safety <span>· Google, Munich</span></span></li>
+        <li><span class="when">2021 – 2022</span><span class="what">Visiting Professor (W3), Human-Centered AI <span>· University of Augsburg</span></span></li>
+        <li><span class="when">2021</span><span class="what">Visiting Researcher, Trust and Safety <span>· Google, Munich / San Francisco</span></span></li>
+        <li><span class="when">2016 – 2021</span><span class="what">Researcher and Postdoc, Media Informatics Group <span>· LMU Munich</span></span></li>
+        <li><span class="when">2010 – 2016</span><span class="what">UX Researcher, Product Manager, Senior Digital Product Manager <span>· American Express and PAYBACK, London / Munich</span></span></li>
+        <li><span class="when">2008 – 2009</span><span class="what">Analyst, UNODC Vienna; Developer, Goldman Sachs London</span></li>
+      </ul>
+
+      <p class="label subhead">Education</p>
+      <ul class="rows">
+        <li><span class="when">2020</span><span class="what">Dr. rer. nat., summa cum laude <span>· LMU Munich</span></span></li>
+        <li><span class="when">2012</span><span class="what">M.Sc. Human-Centred Computer Systems <span>· University of Sussex</span></span></li>
+        <li><span class="when">2010</span><span class="what">B.Sc. Computer Science with Business <span>· University of Bath</span></span></li>
+      </ul>
+
+      <p class="label subhead">Awards</p>
+      <ul class="rows">
+        <li><span class="when">2023 – 2026</span><span class="what">Paper awards at CHI '24, CHI '26 and MuC '23 <span>· research on AI-supported interaction systems</span></span></li>
+        <li><span class="when">TU Berlin</span><span class="what">Supervised student work awarded the Rolf-Niedermair Prize</span></li>
+        <li><span class="when">2021</span><span class="what">Nominated by LMU Munich for the GI Dissertation Award</span></li>
+      </ul>
+
+      <div class="two subhead">
+        <div>
+          <h3>Teaching</h3>
+          <ul class="plain">
+            <li>Introduction to Human-Computer Interaction</li>
+            <li>Advanced AR/VR: Participatory XR Development for Inclusion, with Lebenshilfe Berlin</li>
+            <li>Mediengestaltung: Redesign TikTok with Privacy by Design</li>
+            <li>Courses in AR/VR, Unity and interaction design at TU Berlin, LMU Munich and the University of Augsburg</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Service</h3>
+          <ul class="plain">
+            <li>Associate Chair, CHI 2022–2026</li>
+            <li>Expert Board, VR/AR Special Interest Group, Gesellschaft für Informatik</li>
+            <li>Co-founder, Women Academic Leaders in HCI mentoring circle</li>
+            <li>Founder and host, BUA Doctoral Colloquium on HCI</li>
+            <li>Reviewer for IEEE VR, ISMAR, CHI, IEEE TVCG and ACM TOCHI</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <p class="label">Contact</p>
+      <h2 class="lead">Interested in a thesis, a collaboration or a talk? Write to me.</h2>
+      <dl class="contact">
+        <div><dt>Email</dt><dd><span id="email">ceenu.george@tu-berlin.de</span><button class="copy" type="button" id="copy-email">Copy</button></dd></div>
+        <div><dt>Office</dt><dd>Room EN-358<br>TU Berlin, Faculty IV</dd></div>
+        <div><dt>Elsewhere</dt><dd><a href="https://orcid.org/0009-0002-8616-0234" target="_blank" rel="noopener">ORCID</a> · <a href="https://www.hci.tu-berlin.de/" target="_blank" rel="noopener">Lab website</a></dd></div>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Ceenu George</span>
+    <span>Updated October 2026</span>
+  </div>
+</footer>
+
+<script src="publications.js"></script>
+<script>
+(function () {
+  var pubs = (window.PUBLICATIONS || []).slice();
+  var list = document.getElementById('pub-list');
+  var count = document.getElementById('pub-count');
+  var search = document.getElementById('pub-search');
+  var chips = document.querySelectorAll('.chip');
+  var filter = 'all';
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function hasMedia(p) { return !!(p.video || p.gif || p.image); }
+  function authors(a) { return esc(a).replace(/Ceenu George/g, '<b>Ceenu George</b>'); }
+
+  function thumb(p) {
+    var inner = '';
+    if (p.video) inner = '<video muted loop playsinline preload="metadata" src="' + esc(p.video) + '" aria-label="Video preview"></video>';
+    else if (p.gif) inner = '<img loading="lazy" src="' + esc(p.gif) + '" alt="Animated preview">';
+    else if (p.image) inner = '<img loading="lazy" src="' + esc(p.image) + '" alt="">';
+    else inner = '<span class="venue-mark">' + esc(p.short || p.year) + '</span>';
+    return '<div class="thumb' + (hasMedia(p) ? ' has-media' : '') + '">' + inner + '</div>';
+  }
+
+  function item(p) {
+    var links = [];
+    if (p.doi) links.push('<a href="https://doi.org/' + esc(p.doi) + '" target="_blank" rel="noopener">DOI</a>');
+    if (p.pdf) links.push('<a href="' + esc(p.pdf) + '" target="_blank" rel="noopener">PDF</a>');
+    if (p.video) links.push('<a href="' + esc(p.video) + '" target="_blank" rel="noopener">Video</a>');
+    return '<li class="pub">' + thumb(p) + '<div>' +
+      (p.award ? '<span class="award">' + esc(p.award) + '</span>' : '') +
+      '<h3>' + esc(p.title) + '</h3>' +
+      '<p class="authors">' + authors(p.authors) + '</p>' +
+      '<p class="meta"><span class="venue">' + esc(p.venue) + '</span>' + links.join('') + '</p>' +
+      '</div></li>';
+  }
+
+  function render() {
+    var q = search.value.trim().toLowerCase();
+    var shown = pubs.filter(function (p) {
+      if (filter === 'selected' && !p.selected) return false;
+      if (filter === 'media' && !hasMedia(p)) return false;
+      if (!q) return true;
+      return [p.title, p.authors, p.venue, p.short, p.year].join(' ').toLowerCase().indexOf(q) !== -1;
+    }).sort(function (a, b) { return b.year - a.year; });
+
+    count.textContent = shown.length + (shown.length === 1 ? ' paper' : ' papers');
+    if (!shown.length) {
+      list.innerHTML = '<p class="empty">' + (filter === 'media' && !q
+        ? 'No papers have a video yet. Add a <code>video</code> or <code>gif</code> line to a paper in publications.js.'
+        : 'No papers match that search.') + '</p>';
+      return;
+    }
+    var years = [], groups = {};
+    shown.forEach(function (p) { if (!groups[p.year]) { groups[p.year] = []; years.push(p.year); } groups[p.year].push(p); });
+    list.innerHTML = years.map(function (y) {
+      return '<div class="year-group"><div class="year">' + y + '</div><ul class="pubs">' + groups[y].map(item).join('') + '</ul></div>';
+    }).join('');
+    watchVideos();
+  }
+
+  // Play preview loops only while they are on screen, and never when reduced motion is requested.
+  var io = ('IntersectionObserver' in window) ? new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (reduce) return;
+      if (e.isIntersecting) { var pr = e.target.play(); if (pr && pr.catch) pr.catch(function () {}); }
+      else e.target.pause();
+    });
+  }, { threshold: 0.4 }) : null;
+  function watchVideos() {
+    list.querySelectorAll('video').forEach(function (v) {
+      if (io) io.observe(v);
+      if (reduce) { v.addEventListener('mouseenter', function () { v.play().catch(function () {}); }); v.addEventListener('mouseleave', function () { v.pause(); }); }
+    });
+  }
+
+  chips.forEach(function (c) {
+    c.addEventListener('click', function () {
+      filter = c.getAttribute('data-filter');
+      chips.forEach(function (o) { o.setAttribute('aria-pressed', o === c ? 'true' : 'false'); });
+      render();
+    });
+  });
+  search.addEventListener('input', render);
+  render();
+
+  // Copy email
+  var btn = document.getElementById('copy-email');
+  btn.addEventListener('click', function () {
+    var text = document.getElementById('email').textContent;
+    function done() { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy'; }, 1600); }
+    function fallback() { var r = document.createRange(); r.selectNodeContents(document.getElementById('email')); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+    try { navigator.clipboard.writeText(text).then(done, fallback); } catch (e) { fallback(); }
+  });
+
+  // Peripheral scroll line, header rule, and active section in the nav
+  var edge = document.querySelector('.edge');
+  var header = document.querySelector('header.top');
+  var navLinks = document.querySelectorAll('nav a');
+  var sections = ['research', 'publications', 'about', 'contact'].map(function (id) { return document.getElementById(id); });
+  function onScroll() {
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    edge.style.transform = 'scaleY(' + (h > 0 ? Math.min(1, window.scrollY / h) : 0) + ')';
+    header.classList.toggle('scrolled', window.scrollY > 8);
+    var current = '';
+    sections.forEach(function (s) { if (s && s.getBoundingClientRect().top < 120) current = s.id; });
+    navLinks.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + current); });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+</body>
+</html>
