@@ -1,8 +1,19 @@
 /*
   PUBLICATIONS
   ------------
-  This is the only file you need to edit to add a paper.
-  Copy the template below, paste it at the top of the list, and fill it in.
+  New papers on your ORCID appear on the site automatically every week
+  (they are stored in publications-orcid.js, which you should not edit).
+
+  Use THIS file to:
+    - add papers that are not on ORCID,
+    - add a video, GIF, award or "selected" mark to any paper,
+    - correct how a paper from ORCID is shown.
+
+  An entry here with the same DOI or title as an ORCID paper replaces it.
+  To add only a video to an ORCID paper, a short entry is enough:
+    { doi: "10.1145/3772318.3791241", video: "media/avatars.mp4" },
+
+  For a full entry, copy the template below and paste it into the list.
   Fields you don't need can be deleted.
 
   {
@@ -26,6 +37,57 @@
 
 window.PUBLICATIONS = [
   {
+    year: 2026,
+    title: "Designing a 3D Burn Documentation Prototype for Pre-Hospital Emergency Medical Services: An HCI Pilot Evaluation Study on User Perception",
+    authors: "Antonia Marzena Beyer, Jacobe Klein, Ceenu George, Claudia Müller-Birn",
+    venue: "Mensch und Computer",
+    short: "MuC '26",
+    doi: "10.1145/3820253.3831373"
+  },
+  {
+    year: 2026,
+    title: "The Role of Personality of Conversational Virtual Avatars on Proxemic Behaviour during Indoor Navigation",
+    authors: "Rishab Bhattacharyya, Wassim Al Shami, Ceenu George",
+    venue: "ACM CHI Conference on Human Factors in Computing Systems",
+    short: "CHI '26",
+    doi: "10.1145/3772318.3791241",
+    selected: true
+  },
+  {
+    year: 2026,
+    title: "With, not For: Co-Designing a Patient-Facing AI Companion Concept for the Emergency Department Waiting Area",
+    authors: "Jacobe Klein, Peter Sörries, Yasemin Mutlugil, Ceenu George, Maria Altendorf, Martin Möckel, Claudia Müller-Birn",
+    venue: "ACM CHI Conference on Human Factors in Computing Systems",
+    short: "CHI '26",
+    doi: "10.1145/3772318.3790638",
+    selected: true
+  },
+  {
+    year: 2026,
+    title: "Enhancing Generative AI Image Refinement with Scribbles and Annotations: A Comparative Study of Multimodal Prompts",
+    authors: "Hyerim Park, Phuong Thao Tran, Andre Luckow, Ceenu George, Michael Sedlmair, Malin Eiband",
+    venue: "ACM International Conference on Intelligent User Interfaces",
+    short: "IUI '26",
+    doi: "10.1145/3742413.3789080"
+  },
+  {
+    year: 2026,
+    title: "A Case Study on Making Inclusive XR a Core Teaching Practice",
+    authors: "Thekla Mayer, Cosima Holler, Ceenu George",
+    venue: "ACM International Symposium on Pervasive Displays",
+    short: "PerDis '26",
+    doi: "10.1145/3797993.3798025"
+  },
+  {
+    year: 2025,
+    title: "Contextualizing Public Interfaces for Meaningful Human–Environment Interactions with Traces in Use",
+    authors: "Linda Hirsch, Marius Hoggenmueller, Andreas Butz, Louisa Bekker, Sarita Sridharan, Ceenu George",
+    venue: "ACM Transactions on Computer-Human Interaction",
+    short: "TOCHI '25",
+    doi: "10.1145/3762809",
+    selected: true
+  },
+  {
     year: 2024,
     title: "Explaining It Your Way: Findings from a Co-Creative Design Workshop on Designing XAI Applications with AI End-Users from the Public Sector",
     authors: "Katharina Weitz, Ruben Schlagowski, Elisabeth André, Maris Männiste, Ceenu George",
@@ -48,6 +110,7 @@ window.PUBLICATIONS = [
     authors: "Luke Haliburton, Beat Rossmy, Albrecht Schmidt, Ceenu George",
     venue: "International Conference on Mobile and Ubiquitous Multimedia",
     short: "MUM '23",
+    award: "Paper Award",
     doi: "10.1145/3626705.3627788"
   },
   {
